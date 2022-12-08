@@ -1,24 +1,38 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {useEffect, useRef, useState} from "react";
 
 function App() {
-  return (
+  let [time,setTimer] = useState(0);
+  let [min,setMin] = useState(0);
+  let [sec,setSec] = useState(0);
+  let [hour,setHour] = useState(0);
+  let timee = useRef();
+  function startTime(){
+   timee.current = setInterval(() => {
+      setTimer(pre=>pre+1)
+    }, 1000);
+  }
+
+  useEffect(()=>{
+    if(time<60){
+      setHour(0);
+      
+    }
+ return ()=> clearInterval(timee.current);
+},[]);
+
+
+ return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <h1>Stop Watch {time} </h1>
+    <h2>Start editing to see some magic happen!</h2>
+   <button onClick={startTime}>Start</button>
+   <button onClick={()=>clearInterval(timee.current)}>pause</button>
+   <button onClick={()=>{ clearInterval(timee.current)
+     setTimer(0) }}>reset</button>
+
+  </div>
   );
 }
 
